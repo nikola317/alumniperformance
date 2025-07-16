@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Performance - Train with Champion Athletes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(26, 54, 93, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1a365d;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link:hover {
+            background: #1a365d;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 54, 93, 0.3);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 250px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            border: 1px solid rgba(26, 54, 93, 0.1);
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .dropdown-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f7fafc;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            color: #4a5568;
+            position: relative;
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(90deg, #f7fafc, white);
+            color: #1a365d;
+            font-weight: 600;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 2rem;
+            text-align: center;
+            color: #1a365d;
+            background: linear-gradient(135deg, rgba(247, 250, 252, 0.9), rgba(237, 242, 247, 0.9));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(26, 54, 93, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, -30px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+            color: #000000;
+            animation: slideInUp 0.8s ease;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            color: #000000;
+            animation: slideInUp 0.8s ease 0.2s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUp 0.8s ease 0.4s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(26, 54, 93, 0.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: #1a365d;
+            border: 3px solid #1a365d;
+        }
+
+        .cta-button.secondary:hover {
+            background: #1a365d;
+            color: white;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1a365d, #2d3748);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(26, 54, 93, 0.2);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem auto;
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card h3 {
+            color: #000000;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card p {
+            color: #000000;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Platform Sections */
+        .platform-section {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f8fafc;
+            z-index: 2500;
+            overflow-y: auto;
+            animation: slideInRight 0.4s ease;
+        }
+
+        .platform-section.active {
+            display: block;
+        }
+
+        @keyframes slideInRight {
+            from { 
+                opacity: 0; 
+                transform: translateX(100%); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0); 
+            }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, white, #f8fafc);
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid rgba(26, 54, 93, 0.1);
+        }
+
+        .section-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-button, .close-section {
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .back-button:hover, .close-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 54, 93, 0.3);
+        }
+
+        .close-section {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a365d;
+        }
+
+        /* Town and Alumni Cards */
+        .towns-grid, .alumni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 2rem;
+        }
+
+        .town-card, .alumni-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border-left: 5px solid #1a365d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .town-card:hover, .alumni-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(26, 54, 93, 0.2);
+            border-left-color: #2d3748;
+        }
+
+        .town-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1a365d;
+            margin-bottom: 1rem;
+        }
+
+        .town-status {
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            color: #166534;
+            border: 2px solid #22c55e;
+        }
+
+        .status-coming-soon {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #92400e;
+            border: 2px solid #f59e0b;
+        }
+
+        .status-available {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #1e40af;
+            border: 2px solid #3b82f6;
+        }
+
+        .alumni-photo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+            margin: 0 auto 1.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.2rem;
+            font-weight: 800;
+            box-shadow: 0 8px 20px rgba(26, 54, 93, 0.3);
+        }
+
+        .alumni-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1a365d;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .alumni-sport {
+            text-align: center;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .alumni-rating {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .star-rating {
+            color: #f59e0b;
+            font-size: 1.3rem;
+        }
+
+        .alumni-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, #f7fafc, #e2e8f0);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(26, 54, 93, 0.1);
+        }
+
+        .stat-number {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #1a365d;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.25rem;
+            font-weight: 600;
+        }
+
+        .book-button {
+            width: 100%;
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            overflow: hidden;
+        }
+
+        .book-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(26, 54, 93, 0.3);
+        }
+
+        /* Profile Panel */
+        .profile-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 3000;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .profile-content {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            animation: slideInScale 0.4s ease;
+        }
+
+        @keyframes slideInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+            color: white;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-photo-large {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 0 auto 1.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            font-weight: 800;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Modal Panels */
+        .about-panel, .contact-panel, .ai-panel, .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .about-panel.active, .contact-panel.active, .ai-panel.active, .admin-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .about-content, .contact-content, .ai-content, .admin-content {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            animation: slideInScale 0.4s ease;
+        }
+
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            border: 2px solid #1a365d;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 450px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            z-index: 3000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.4s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .notification-title {
+            font-weight: 800;
+            color: #1a365d;
+            font-size: 1.2rem;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .notification-close:hover {
+            background: #f7fafc;
+            color: #1a365d;
+        }
+
+        /* AI Chat Widget */
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 8px 30px rgba(26, 54, 93, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 8px 30px rgba(26, 54, 93, 0.4); }
+            50% { box-shadow: 0 8px 30px rgba(26, 54, 93, 0.6), 0 0 0 10px rgba(26, 54, 93, 0.1); }
+            100% { box-shadow: 0 8px 30px rgba(26, 54, 93, 0.4); }
+        }
+
+        .ai-chat-widget:hover {
+            transform: scale(1.1);
+            animation: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1a365d, #2d3748);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer p {
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .features-container,
+            .towns-grid,
+            .alumni-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .notification {
+                left: 20px;
+                right: 20px;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">A</div>
+                Alumni Performance
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <span class="nav-link">Locations</span>
+                    <div class="dropdown">
+                        <div class="dropdown-item" onclick="showLocationPage('massachusetts')">Massachusetts</div>
+                        <div class="dropdown-item" onclick="showLocationPage('alabama')">Alabama</div>
+                        <div class="dropdown-item" onclick="showLocationPage('alaska')">Alaska</div>
+                        <div class="dropdown-item" onclick="showLocationPage('arizona')">Arizona</div>
+                        <div class="dropdown-item" onclick="showLocationPage('arkansas')">Arkansas</div>
+                        <div class="dropdown-item" onclick="showLocationPage('california')">California</div>
+                        <div class="dropdown-item" onclick="showLocationPage('colorado')">Colorado</div>
+                        <div class="dropdown-item" onclick="showLocationPage('connecticut')">Connecticut</div>
+                        <div class="dropdown-item" onclick="showLocationPage('delaware')">Delaware</div>
+                        <div class="dropdown-item" onclick="showLocationPage('florida')">Florida</div>
+                        <div class="dropdown-item" onclick="showLocationPage('georgia')">Georgia</div>
+                        <div class="dropdown-item" onclick="showLocationPage('hawaii')">Hawaii</div>
+                        <div class="dropdown-item" onclick="showLocationPage('idaho')">Idaho</div>
+                        <div class="dropdown-item" onclick="showLocationPage('illinois')">Illinois</div>
+                        <div class="dropdown-item" onclick="showLocationPage('indiana')">Indiana</div>
+                        <div class="dropdown-item" onclick="showLocationPage('iowa')">Iowa</div>
+                        <div class="dropdown-item" onclick="showLocationPage('kansas')">Kansas</div>
+                        <div class="dropdown-item" onclick="showLocationPage('kentucky')">Kentucky</div>
+                        <div class="dropdown-item" onclick="showLocationPage('louisiana')">Louisiana</div>
+                        <div class="dropdown-item" onclick="showLocationPage('maine')">Maine</div>
+                        <div class="dropdown-item" onclick="showLocationPage('maryland')">Maryland</div>
+                        <div class="dropdown-item" onclick="showLocationPage('michigan')">Michigan</div>
+                        <div class="dropdown-item" onclick="showLocationPage('minnesota')">Minnesota</div>
+                        <div class="dropdown-item" onclick="showLocationPage('mississippi')">Mississippi</div>
+                        <div class="dropdown-item" onclick="showLocationPage('missouri')">Missouri</div>
+                        <div class="dropdown-item" onclick="showLocationPage('montana')">Montana</div>
+                        <div class="dropdown-item" onclick="showLocationPage('nebraska')">Nebraska</div>
+                        <div class="dropdown-item" onclick="showLocationPage('nevada')">Nevada</div>
+                        <div class="dropdown-item" onclick="showLocationPage('new-hampshire')">New Hampshire</div>
+                        <div class="dropdown-item" onclick="showLocationPage('new-jersey')">New Jersey</div>
+                        <div class="dropdown-item" onclick="showLocationPage('new-mexico')">New Mexico</div>
+                        <div class="dropdown-item" onclick="showLocationPage('new-york')">New York</div>
+                        <div class="dropdown-item" onclick="showLocationPage('north-carolina')">North Carolina</div>
+                        <div class="dropdown-item" onclick="showLocationPage('north-dakota')">North Dakota</div>
+                        <div class="dropdown-item" onclick="showLocationPage('ohio')">Ohio</div>
+                        <div class="dropdown-item" onclick="showLocationPage('oklahoma')">Oklahoma</div>
+                        <div class="dropdown-item" onclick="showLocationPage('oregon')">Oregon</div>
+                        <div class="dropdown-item" onclick="showLocationPage('pennsylvania')">Pennsylvania</div>
+                        <div class="dropdown-item" onclick="showLocationPage('rhode-island')">Rhode Island</div>
+                        <div class="dropdown-item" onclick="showLocationPage('south-carolina')">South Carolina</div>
+                        <div class="dropdown-item" onclick="showLocationPage('south-dakota')">South Dakota</div>
+                        <div class="dropdown-item" onclick="showLocationPage('tennessee')">Tennessee</div>
+                        <div class="dropdown-item" onclick="showLocationPage('texas')">Texas</div>
+                        <div class="dropdown-item" onclick="showLocationPage('utah')">Utah</div>
+                        <div class="dropdown-item" onclick="showLocationPage('vermont')">Vermont</div>
+                        <div class="dropdown-item" onclick="showLocationPage('virginia')">Virginia</div>
+                        <div class="dropdown-item" onclick="showLocationPage('washington')">Washington</div>
+                        <div class="dropdown-item" onclick="showLocationPage('west-virginia')">West Virginia</div>
+                        <div class="dropdown-item" onclick="showLocationPage('wisconsin')">Wisconsin</div>
+                        <div class="dropdown-item" onclick="showLocationPage('wyoming')">Wyoming</div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link">About</span>
+                    <div class="dropdown">
+                        <div class="dropdown-item" onclick="showAboutPage()">Our Mission</div>
+                        <div class="dropdown-item" onclick="showAboutPage()">How It Works</div>
+                        <div class="dropdown-item" onclick="showAboutPage()">Success Stories</div>
+                        <div class="dropdown-item" onclick="showAboutPage()">FAQ</div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link">Contact</span>
+                    <div class="dropdown">
+                        <div class="dropdown-item" onclick="showContactPage()">Support</div>
+                        <div class="dropdown-item" onclick="showContactPage()">Partnerships</div>
+                        <div class="dropdown-item" onclick="showContactPage()">Locations</div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link">AI Help</span>
+                    <div class="dropdown">
+                        <div class="dropdown-item" onclick="showAIPage()">Find a Trainer</div>
+                        <div class="dropdown-item" onclick="showAIPage()">Training Tips</div>
+                        <div class="dropdown-item" onclick="showAIPage()">Schedule Assistant</div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link">Admin</span>
+                    <div class="dropdown">
+                        <div class="dropdown-item" onclick="openAdminDashboard()">Dashboard</div>
+                        <div class="dropdown-item" onclick="openAdminDashboard()">Analytics</div>
+                        <div class="dropdown-item" onclick="openAdminDashboard()">Management</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Train with Champions</h1>
+            <p>The fastest-growing network connecting elite alumni athletes with aspiring young players. Thousands of schools. Unlimited potential.</p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-button" onclick="showTrainerSearch()">Find a Trainer</a>
+                <a href="#" class="cta-button secondary" onclick="showBookingPage()">Book a Session</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-container">
+            <div class="feature-card">
+                <div class="feature-icon">★</div>
+                <h3>Elite Athletes</h3>
+                <p>Train with accomplished alumni from top high schools and colleges who have achieved excellence in their sports and know what it takes to succeed at the highest levels.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>Nationwide Network</h3>
+                <p>Expanding to thousands of schools across all 50 states. Find trainers in your area for convenient, in-person sessions that fit your schedule and location.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Smart Scheduling</h3>
+                <p>AI-powered booking system that automatically syncs trainer availability with real-time field permit schedules, eliminating conflicts and maximizing efficiency.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3>Seamless Payments</h3>
+                <p>Pay securely with multiple options including credit cards, Venmo, Zelle, and Stripe integration. Split payments and family billing available.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎓</div>
+                <h3>School Partnerships</h3>
+                <p>Verified partnerships with schools nationwide. Each school manages their own alumni network and field access for maximum authenticity and trust.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <h3>Advanced Integration</h3>
+                <p>Cutting-edge system integration with school management systems, field permits, and municipal recreation departments for seamless coordination.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Massachusetts Towns Section -->
+    <div class="platform-section" id="massachusettsTowns">
+        <div class="section-header">
+            <div class="section-nav">
+                <button class="back-button" onclick="closePlatformSection()">← Back to Home</button>
+                <h1 class="section-title">Massachusetts Locations</h1>
+                <button class="close-section" onclick="closePlatformSection()">✖ Close</button>
+            </div>
+        </div>
+        <div class="section-content">
+            <div class="towns-grid">
+                <div class="town-card" onclick="showAlumni('belmont')">
+                    <div class="town-name">Belmont</div>
+                    <div class="town-status status-active">ACTIVE</div>
+                    <p><strong>Belmont High School</strong></p>
+                    <p>5 Alumni Trainers Available</p>
+                    <p>Partnership Since: January 2024</p>
+                </div>
+                
+                <div class="town-card" onclick="showAlumni('cambridge')">
+                    <div class="town-name">Cambridge</div>
+                    <div class="town-status status-coming-soon">COMING SOON</div>
+                    <p><strong>Cambridge Rindge & Latin</strong></p>
+                    <p>Partnership In Progress</p>
+                    <p>Expected Launch: Spring 2025</p>
+                </div>
+                
+                <div class="town-card" onclick="showAlumni('newton')">
+                    <div class="town-name">Newton</div>
+                    <div class="town-status status-coming-soon">PARTNERSHIP REQUESTED</div>
+                    <p><strong>Newton North High School</strong></p>
+                    <p>12 Alumni Identified</p>
+                    <p>Application Date: Jan 8, 2025</p>
+                </div>
+                
+                <div class="town-card" onclick="showAlumni('watertown')">
+                    <div class="town-name">Watertown</div>
+                    <div class="town-status status-available">AVAILABLE</div>
+                    <p><strong>Watertown High School</strong></p>
+                    <p>Ready for Partnership Request</p>
+                    <p>Municipal Fields Identified</p>
+                </div>
+                
+                <div class="town-card" onclick="showAlumni('arlington')">
+                    <div class="town-name">Arlington</div>
+                    <div class="town-status status-available">AVAILABLE</div>
+                    <p><strong>Arlington High School</strong></p>
+                    <p>Partnership Available</p>
+                    <p>Expansion Ready</p>
+                </div>
+                
+                <div class="town-card" onclick="showAlumni('lexington')">
+                    <div class="town-name">Lexington</div>
+                    <div class="town-status status-available">AVAILABLE</div>
+                    <p><strong>Lexington High School</strong></p>
+                    <p>Partnership Available</p>
+                    <p>High Potential Market</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alumni Section -->
+    <div class="platform-section" id="alumniSection">
+        <div class="section-header">
+            <div class="section-nav">
+                <button class="back-button" onclick="backToTowns()">← Back to Towns</button>
+                <h1 class="section-title" id="alumniSectionTitle">Belmont Alumni Trainers</h1>
+                <button class="close-section" onclick="closePlatformSection()">✖ Close</button>
+            </div>
+        </div>
+        <div class="section-content">
+            <div class="alumni-grid" id="alumniGrid">
+                <!-- Alumni cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile & Booking Panel -->
+    <div class="profile-panel" id="profilePanel">
+        <div class="profile-content">
+            <div class="profile-header">
+                <div class="profile-photo-large" id="profilePhotoLarge">JS</div>
+                <h2 id="profileName">John Smith</h2>
+                <p id="profileSport">Soccer • Class of 2020</p>
+                <div class="alumni-rating">
+                    <div class="star-rating">★★★★★</div>
+                    <span class="rating-text" id="profileRating">(4.9/5 • 47 reviews)</span>
+                </div>
+            </div>
+            
+            <div style="padding: 2rem;">
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: #1a365d; margin-bottom: 1rem; font-weight: 600;">About</h3>
+                    <p id="profileBio" style="color: #4a5568; line-height: 1.6;">Former varsity soccer captain at Belmont High School. Led team to state championships in 2019 and 2020. Currently playing Division I soccer at Northeastern University. Specializes in technical skills, field vision, and leadership development.</p>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: #1a365d; margin-bottom: 1rem; font-weight: 600;">Achievements</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div style="background: #f7fafc; padding: 1rem; border-radius: 8px; text-align: center; border-left: 3px solid #1a365d;">
+                            <strong style="color: #1a365d;">State Champion</strong><br>
+                            <small>2019, 2020</small>
+                        </div>
+                        <div style="background: #f7fafc; padding: 1rem; border-radius: 8px; text-align: center; border-left: 3px solid #1a365d;">
+                            <strong style="color: #1a365d;">Team Captain</strong><br>
+                            <small>2 Years</small>
+                        </div>
+                        <div style="background: #f7fafc; padding: 1rem; border-radius: 8px; text-align: center; border-left: 3px solid #1a365d;">
+                            <strong style="color: #1a365d;">All-State</strong><br>
+                            <small>2019, 2020</small>
+                        </div>
+                        <div style="background: #f7fafc; padding: 1rem; border-radius: 8px; text-align: center; border-left: 3px solid #1a365d;">
+                            <strong style="color: #1a365d;">D1 College</strong><br>
+                            <small>Northeastern</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #f7fafc; padding: 2rem; border-radius: 12px; border-left: 4px solid #1a365d;">
+                    <h3 style="color: #1a365d; margin-bottom: 1.5rem; font-weight: 600;">Book a Training Session</h3>
+                    <p style="color: #666; margin-bottom: 1.5rem;">3-Way Integration: School Schedule + Field Permits + Trainer Availability</p>
+                    
+                    <!-- Calendar Navigation -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <button onclick="changeMonth(-1)" style="background: #1a365d; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">← Previous</button>
+                        <h4 id="currentMonth" style="color: #1a365d; font-size: 1.2rem; font-weight: 600;">July 2025</h4>
+                        <button onclick="changeMonth(1)" style="background: #1a365d; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Next →</button>
+                    </div>
+                    
+                    <!-- Calendar Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; margin-bottom: 1rem;">
+                        <div style="padding: 0.5rem; text-align: center; font-weight: 600; color: #666;">Sun</div>
+                        <div style="padding: 0.5rem; text-align: center; font-weight: 600; color: #666;">Mon</div>
+                        <div style="padding: 0.5rem; text-align: center; font-weight: 600; color: #666;">Tue</div>
+                        <div style="padding: 0.5rem; text-align: center; font-weight: 600; color: #666;">Wed</div>
+                        <div style="padding: 0.5rem; text-align: center; font-weight: 600; color: #666;">Thu</div>
+                        <div style="padding: 0.5rem; text-align: center; font-weight: 600; color: #666;">Fri</div>
+                        <div style="padding: 0.5rem; text-align: center; font-weight: 600; color: #666;">Sat</div>
+                    </div>
+                    
+                    <div id="calendarGrid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; margin-bottom: 2rem;">
+                        <!-- Calendar days will be populated by JavaScript -->
+                    </div>
+                    
+                    <!-- Time Slots -->
+                    <div id="timeSlots" style="display: none; margin-bottom: 2rem;">
+                        <h4 style="color: #1a365d; margin-bottom: 1rem;">Available Times</h4>
+                        <div id="timeSlotsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem;">
+                            <!-- Time slots will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- Integration Status -->
+                    <div id="integrationStatus" style="display: none; background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid #e2e8f0;">
+                        <h4 style="color: #1a365d; margin-bottom: 1rem;">Real-Time Integration Check</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                            <div style="text-align: center;">
+                                <div id="schoolStatus" style="width: 12px; height: 12px; border-radius: 50%; background: #10b981; margin: 0 auto 0.5rem; animation: pulse 2s infinite;"></div>
+                                <small style="color: #666;">School Schedule</small>
+                            </div>
+                            <div style="text-align: center;">
+                                <div id="fieldStatus" style="width: 12px; height: 12px; border-radius: 50%; background: #10b981; margin: 0 auto 0.5rem; animation: pulse 2s infinite;"></div>
+                                <small style="color: #666;">Field Permits</small>
+                            </div>
+                            <div style="text-align: center;">
+                                <div id="trainerStatus" style="width: 12px; height: 12px; border-radius: 50%; background: #10b981; margin: 0 auto 0.5rem; animation: pulse 2s infinite;"></div>
+                                <small style="color: #666;">Trainer Available</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Booking Summary -->
+                    <div id="bookingSummary" style="display: none; background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid #e2e8f0;">
+                        <h4 style="color: #1a365d; margin-bottom: 1rem;">Booking Summary</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <strong style="color: #666;">Date:</strong><br>
+                                <span id="selectedDate">-</span>
+                            </div>
+                            <div>
+                                <strong style="color: #666;">Time:</strong><br>
+                                <span id="selectedTime">-</span>
+                            </div>
+                            <div>
+                                <strong style="color: #666;">Location:</strong><br>
+                                <span>Belmont High School Athletic Fields</span>
+                            </div>
+                            <div>
+                                <strong style="color: #666;">Duration:</strong><br>
+                                <span>60 minutes</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <strong style="color: #1a365d; font-size: 1.2rem;">Total: $75.00</strong>
+                                <button onclick="proceedToPayment()" style="background: #10b981; color: white; border: none; padding: 0.75rem 2rem; border-radius: 6px; cursor: pointer; font-weight: 600;">Proceed to Payment</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Section -->
+                    <div id="paymentSection" style="display: none; background: white; padding: 2rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+                        <h4 style="color: #1a365d; margin-bottom: 1.5rem;">Secure Payment</h4>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                            <div onclick="selectPaymentMethod('card')" style="padding: 1rem; border: 2px solid #e2e8f0; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s ease;" class="payment-method">
+                                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💳</div>
+                                <small>Credit Card</small>
+                            </div>
+                            <div onclick="selectPaymentMethod('venmo')" style="padding: 1rem; border: 2px solid #e2e8f0; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s ease;" class="payment-method">
+                                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📱</div>
+                                <small>Venmo</small>
+                            </div>
+                            <div onclick="selectPaymentMethod('zelle')" style="padding: 1rem; border: 2px solid #e2e8f0; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.2s ease;" class="payment-method">
+                                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏦</div>
+                                <small>Zelle</small>
+                            </div>
+                        </div>
+                        
+                        <div id="paymentForm" style="display: none;">
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #1a365d;">Cardholder Name</label>
+                                <input type="text" placeholder="John Doe" style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 1rem;">
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #1a365d;">Card Number</label>
+                                <input type="text" placeholder="1234 5678 9012 3456" style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 1rem;">
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #1a365d;">Expiry</label>
+                                    <input type="text" placeholder="MM/YY" style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 1rem;">
+                                </div>
+                                <div>
+                                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #1a365d;">CVV</label>
+                                    <input type="text" placeholder="123" style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 1rem;">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="completeBooking()" style="width: 100%; background: #1a365d; color: white; border: none; padding: 1rem; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">Complete Booking</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Panel -->
+    <div class="about-panel" id="aboutPanel">
+        <div class="about-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e2e8f0;">
+                <h1 style="font-size: 2.5rem; font-weight: 800; color: #1a365d;">About Alumni Performance</h1>
+                <button onclick="closeAbout()" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600;">✖ Close</button>
+            </div>
+
+            <div style="margin-bottom: 3rem;">
+                <h2 style="color: #1a365d; font-size: 2rem; margin-bottom: 1rem;">Our Mission</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: #444;">Our goal at Alumni Performance is to connect local alumni athletes to youth athletes who are aspiring to fill these coaches' shoes one day. We care about the youth athlete's individual journeys, and most of the times the journeys are similar to those of alumni - so if the youth athletes train with their alumni, they will play like their alumni (and better).</p>
+                
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: #444;">We want to make a change in the sporting system in the United States, as we are aware that many families in towns and cities are extremely underwhelmed by their local sports organizations. Through our platform, we're creating meaningful connections between proven champions and the next generation of athletes.</p>
+            </div>
+
+            <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; margin: 2rem 0;">
+                <h3 style="color: #1a365d; font-size: 1.5rem; margin-bottom: 1rem;">How It Works</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div style="background: white; padding: 1.5rem; border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                        <div style="background: #1a365d; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; margin: 0 auto 1rem auto;">1</div>
+                        <h4 style="color: #1a365d; margin-bottom: 0.5rem;">Schools Partner</h4>
+                        <p>Schools join our network and verify their alumni athletes</p>
+                    </div>
+                    <div style="background: white; padding: 1.5rem; border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                        <div style="background: #1a365d; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; margin: 0 auto 1rem auto;">2</div>
+                        <h4 style="color: #1a365d; margin-bottom: 0.5rem;">Alumni Set Availability</h4>
+                        <p>Verified alumni coaches set their training schedules</p>
+                    </div>
+                    <div style="background: white; padding: 1.5rem; border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                        <div style="background: #1a365d; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; margin: 0 auto 1rem auto;">3</div>
+                        <h4 style="color: #1a365d; margin-bottom: 0.5rem;">Smart Booking</h4>
+                        <p>Students book when trainers and fields are both available</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 3rem;">
+                <h2 style="color: #1a365d; font-size: 2rem; margin-bottom: 1rem;">Frequently Asked Questions</h2>
+                
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border-left: 4px solid #1a365d;">
+                    <div style="font-weight: bold; color: #1a365d; font-size: 1.1rem; margin-bottom: 0.5rem;">How does the three-way integration platform work?</div>
+                    <div style="color: #555; line-height: 1.6;">Our platform connects three key components: Alumni Performance (central coordination), Schools (who verify and hire their alumni), and Young Athletes (who book sessions). We sync real-time data between school management systems, field permit databases, and our booking platform to ensure seamless coordination.</div>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border-left: 4px solid #1a365d;">
+                    <div style="font-weight: bold; color: #1a365d; font-size: 1.1rem; margin-bottom: 0.5rem;">How does the meet-up system work for safety?</div>
+                    <div style="color: #555; line-height: 1.6;">We're developing a mobile app that provides secure session codes. When a session is booked, the trainee receives a unique code linked to the booking time. At the start of the session, the youth athlete gives this code to the coach, officially marking the session start. At the end, a new code appears on the app to confirm session completion.</div>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border-left: 4px solid #1a365d;">
+                    <div style="font-weight: bold; color: #1a365d; font-size: 1.1rem; margin-bottom: 0.5rem;">How are alumni trainers verified?</div>
+                    <div style="color: #555; line-height: 1.6;">All alumni trainers are verified and hired directly by their former schools. This ensures authenticity and maintains the school's standards. Schools manage their own alumni network and can add or remove trainers as needed.</div>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border-left: 4px solid #1a365d;">
+                    <div style="font-weight: bold; color: #1a365d; font-size: 1.1rem; margin-bottom: 0.5rem;">How do you ensure field availability?</div>
+                    <div style="color: #555; line-height: 1.6;">We integrate directly with school and municipal field permit systems, providing real-time availability updates. Our system automatically checks both trainer availability and field permits before allowing bookings, eliminating scheduling conflicts.</div>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border-left: 4px solid #1a365d;">
+                    <div style="font-weight: bold; color: #1a365d; font-size: 1.1rem; margin-bottom: 0.5rem;">What sports do you cover?</div>
+                    <div style="color: #555; line-height: 1.6;">We cover all sports! Each school manages their own alumni network across different sports. Whether it's football, soccer, basketball, baseball, tennis, or any other sport, schools can add alumni trainers from any athletic program.</div>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border-left: 4px solid #1a365d;">
+                    <div style="font-weight: bold; color: #1a365d; font-size: 1.1rem; margin-bottom: 0.5rem;">How do schools join the network?</div>
+                    <div style="color: #555; line-height: 1.6;">Schools can request partnerships through our platform. We work with them to set up field permit integrations, verify alumni trainers, and establish their presence on our network. The process typically takes 2-4 weeks from application to go-live.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Panel -->
+    <div class="contact-panel" id="contactPanel">
+        <div class="contact-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e2e8f0;">
+                <h1 style="font-size: 2.5rem; font-weight: 800; color: #1a365d;">Contact Us</h1>
+                <button onclick="closeContact()" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600;">✖ Close</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; border-left: 4px solid #1a365d; text-align: center;">
+                    <h3 style="color: #1a365d; margin-bottom: 1rem;">Email Support</h3>
+                    <div style="font-size: 1.1rem; color: #555; line-height: 1.6;">
+                        <p><strong style="color: #1a365d;">General:</strong> info@alumniperformance.com</p>
+                        <p><strong style="color: #1a365d;">Schools:</strong> schools@alumniperformance.com</p>
+                        <p><strong style="color: #1a365d;">Support:</strong> support@alumniperformance.com</p>
+                    </div>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; border-left: 4px solid #1a365d; text-align: center;">
+                    <h3 style="color: #1a365d; margin-bottom: 1rem;">Phone Support</h3>
+                    <div style="font-size: 1.1rem; color: #555; line-height: 1.6;">
+                        <p><strong style="color: #1a365d;">Main:</strong> (617) 555-0123</p>
+                        <p><strong style="color: #1a365d;">Schools:</strong> (617) 555-0124</p>
+                        <p><strong style="color: #1a365d;">Hours:</strong> Mon-Fri 9AM-6PM EST</p>
+                    </div>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; border-left: 4px solid #1a365d; text-align: center;">
+                    <h3 style="color: #1a365d; margin-bottom: 1rem;">Live Chat</h3>
+                    <div style="font-size: 1.1rem; color: #555; line-height: 1.6;">
+                        <p>Click the AI assistant for instant help!</p>
+                        <p><strong style="color: #1a365d;">Available 24/7</strong></p>
+                        <p>Instant responses for common questions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Help Panel -->
+    <div class="ai-panel" id="aiPanel">
+        <div class="ai-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e2e8f0;">
+                <h1 style="font-size: 2.5rem; font-weight: 800; color: #1a365d;">AI Assistant</h1>
+                <button onclick="closeAI()" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600;">✖ Close</button>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h2 style="color: #1a365d; font-size: 2rem; margin-bottom: 1rem;">Your Intelligent Training Assistant</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: #444;">Our AI assistant is trained on thousands of elite athlete experiences and can help you navigate the Alumni Performance platform with ease.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; border-left: 4px solid #1a365d;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🔍</div>
+                    <h3 style="color: #1a365d; margin-bottom: 1rem;">AI Trainer Finder</h3>
+                    <p>Get personalized trainer recommendations based on your sport, position, skill level, location, and goals.</p>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; border-left: 4px solid #1a365d;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">💡</div>
+                    <h3 style="color: #1a365d; margin-bottom: 1rem;">Training Tips</h3>
+                    <p>Receive sport-specific drills, mental preparation techniques, and performance optimization strategies.</p>
+                </div>
+
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; border-left: 4px solid #1a365d;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">📅</div>
+                    <h3 style="color: #1a365d; margin-bottom: 1rem;">Schedule Assistant</h3>
+                    <p>Automatically find available trainers, check field permits, and manage your training schedule.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid #e2e8f0;">
+                <h1 style="font-size: 2.5rem; font-weight: 800; color: #1a365d;">Admin Dashboard</h1>
+                <button onclick="closeAdmin()" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600;">✖ Close</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; text-align: center; border-left: 4px solid #1a365d;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #1a365d; margin-bottom: 0.5rem;">1,247</div>
+                    <div style="color: #666; font-size: 0.9rem;">Total Schools</div>
+                </div>
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; text-align: center; border-left: 4px solid #1a365d;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #1a365d; margin-bottom: 0.5rem;">3,892</div>
+                    <div style="color: #666; font-size: 0.9rem;">Alumni Trainers</div>
+                </div>
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; text-align: center; border-left: 4px solid #1a365d;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #1a365d; margin-bottom: 0.5rem;">12,459</div>
+                    <div style="color: #666; font-size: 0.9rem;">Active Students</div>
+                </div>
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; text-align: center; border-left: 4px solid #1a365d;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #1a365d; margin-bottom: 0.5rem;">$2.3M</div>
+                    <div style="color: #666; font-size: 0.9rem;">Monthly Revenue</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; border-left: 4px solid #1a365d;">
+                    <h3 style="color: #1a365d; margin-bottom: 1rem;">School Management</h3>
+                    <p>Manage partnerships, approvals, and onboarding for schools nationwide.</p>
+                    <button onclick="showAdminDemo('schools')" style="background: #1a365d; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 1rem;">View Schools</button>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; border-left: 4px solid #1a365d;">
+                    <h3 style="color: #1a365d; margin-bottom: 1rem;">Field Integration</h3>
+                    <p>Monitor field permit API connections and real-time availability across all locations.</p>
+                    <button onclick="showAdminDemo('fields')" style="background: #1a365d; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 1rem;">View Fields</button>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; border-left: 4px solid #1a365d;">
+                    <h3 style="color: #1a365d; margin-bottom: 1rem;">Analytics</h3>
+                    <p>Track growth metrics, revenue, and system performance across the entire platform.</p>
+                    <button onclick="showAdminDemo('analytics')" style="background: #1a365d; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 1rem;">View Analytics</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chat Widget -->
+    <div class="ai-chat-widget" onclick="toggleAIChat()">AI</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Alumni Performance. All rights reserved. Built for excellence.</p>
+    </footer>
+
+    <script>
+        // Global variables
+        let currentDate = new Date();
+        let selectedDate = null;
+        let selectedTime = null;
+        let selectedPaymentMethod = null;
+
+        // Alumni data
+        const alumniData = {
+            belmont: [
+                {
+                    name: "John Smith",
+                    sport: "Soccer",
+                    initials: "JS",
+                    rating: "4.9",
+                    reviews: "47",
+                    sessions: "156",
+                    experience: "3 Years",
+                    bio: "Former varsity soccer captain at Belmont High School. Led team to state championships in 2019 and 2020. Currently playing Division I soccer at Northeastern University. Specializes in technical skills, field vision, and leadership development."
+                },
+                {
+                    name: "Sarah Johnson",
+                    sport: "Basketball",
+                    initials: "SJ",
+                    rating: "4.8",
+                    reviews: "32",
+                    sessions: "89",
+                    experience: "2 Years", 
+                    bio: "Point guard who led Belmont to league championships. Now plays at Boston College. Expert in ball handling, court vision, and defensive strategies."
+                },
+                {
+                    name: "Mike Rodriguez",
+                    sport: "Baseball",
+                    initials: "MR",
+                    rating: "4.7",
+                    reviews: "28",
+                    sessions: "67",
+                    experience: "2 Years",
+                    bio: "Former varsity pitcher with full scholarship to UMass. Specializes in pitching mechanics, batting technique, and mental game preparation."
+                },
+                {
+                    name: "Emma Chen",
+                    sport: "Tennis",
+                    initials: "EC", 
+                    rating: "4.9",
+                    reviews: "41",
+                    sessions: "134",
+                    experience: "3 Years",
+                    bio: "State singles champion and current Harvard team member. Expert in technical fundamentals, match strategy, and competitive mindset."
+                }
+            ]
+        };
+
+        // 3-way integration data
+        const integrationData = {
+            schoolSchedule: {
+                blocked: ['2025-07-15T14:00', '2025-07-16T15:00', '2025-07-20T10:00']
+            },
+            fieldPermits: {
+                available: {
+                    '2025-07-15': ['09:00', '10:00', '11:00', '16:00', '17:00'],
+                    '2025-07-16': ['09:00', '10:00', '11:00', '14:00', '16:00', '17:00'],
+                    '2025-07-17': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'],
+                    '2025-07-18': ['09:00', '10:00', '14:00', '15:00', '16:00', '17:00'],
+                    '2025-07-19': ['09:00', '10:00', '11:00', '14:00', '15:00'],
+                    '2025-07-20': ['11:00', '14:00', '15:00', '16:00', '17:00'],
+                    '2025-07-21': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'],
+                    '2025-07-22': ['09:00', '10:00', '11:00', '16:00', '17:00'],
+                    '2025-07-23': ['09:00', '10:00', '14:00', '15:00', '16:00', '17:00'],
+                    '2025-07-24': ['09:00', '10:00', '11:00', '14:00', '15:00'],
+                    '2025-07-25': ['09:00', '10:00', '11:00', '16:00', '17:00'],
+                    '2025-07-26': ['09:00', '14:00', '15:00', '16:00', '17:00'],
+                    '2025-07-27': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'],
+                    '2025-08-01': ['09:00', '10:00', '14:00', '15:00', '16:00'],
+                    '2025-08-02': ['09:00', '10:00', '11:00', '16:00', '17:00'],
+                    '2025-08-03': ['09:00', '14:00', '15:00', '16:00', '17:00'],
+                    '2025-08-04': ['09:00', '10:00', '11:00', '14:00', '15:00'],
+                    '2025-08-05': ['09:00', '10:00', '16:00', '17:00'],
+                    '2025-08-06': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'],
+                    '2025-08-07': ['09:00', '14:00', '15:00', '16:00'],
+                    '2025-08-08': ['09:00', '10:00', '11:00', '16:00', '17:00'],
+                    '2025-08-09': ['09:00', '10:00', '14:00', '15:00', '16:00'],
+                    '2025-08-10': ['09:00', '11:00', '14:00', '15:00', '16:00', '17:00']
+                }
+            },
+            trainerSchedule: {
+                available: {
+                    '2025-07-15': ['09:00', '10:00', '11:00', '16:00', '17:00'],
+                    '2025-07-16': ['09:00', '10:00', '11:00', '14:00', '16:00'],
+                    '2025-07-17': ['09:00', '10:00', '14:00', '15:00', '16:00'],
+                    '2025-07-18': ['09:00', '14:00', '15:00', '16:00', '17:00'],
+                    '2025-07-19': ['09:00', '10:00', '11:00', '14:00', '15:00'],
+                    '2025-07-20': ['14:00', '15:00', '16:00', '17:00'],
+                    '2025-07-21': ['09:00', '10:00', '14:00', '15:00', '16:00'],
+                    '2025-07-22': ['09:00', '10:00', '11:00', '16:00', '17:00'],
+                    '2025-07-23': ['09:00', '14:00', '15:00', '16:00', '17:00'],
+                    '2025-07-24': ['09:00', '10:00', '11:00', '14:00'],
+                    '2025-07-25': ['09:00', '10:00', '16:00', '17:00'],
+                    '2025-07-26': ['09:00', '14:00', '15:00', '16:00'],
+                    '2025-07-27': ['09:00', '10:00', '11:00', '14:00', '15:00'],
+                    '2025-08-01': ['09:00', '10:00', '14:00', '15:00'],
+                    '2025-08-02': ['09:00', '10:00', '16:00', '17:00'],
+                    '2025-08-03': ['09:00', '14:00', '15:00', '16:00'],
+                    '2025-08-04': ['09:00', '10:00', '11:00', '14:00'],
+                    '2025-08-05': ['09:00', '16:00', '17:00'],
+                    '2025-08-06': ['09:00', '10:00', '14:00', '15:00', '16:00'],
+                    '2025-08-07': ['09:00', '14:00', '15:00'],
+                    '2025-08-08': ['09:00', '10:00', '16:00', '17:00'],
+                    '2025-08-09': ['09:00', '14:00', '15:00', '16:00'],
+                    '2025-08-10': ['09:00', '11:00', '14:00', '15:00', '16:00']
+                }
+            }
+        };
+
+        // Navigation functions
+        function showLocationPage(state) {
+            closeNotification();
+            
+            if (state === 'massachusetts') {
+                document.getElementById('massachusettsTowns').classList.add('active');
+            } else {
+                const stateName = state.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                showNotification(`${stateName} Coming Soon!`, `
+                    We're actively working on partnerships in ${stateName} and will be launching soon.<br><br>
+                    <strong>Expected Launch:</strong> 2025<br>
+                    <strong>Interested in partnerships?</strong> Contact us!
+                `);
+            }
+        }
+
+        function closePlatformSection() {
+            document.querySelectorAll('.platform-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('profilePanel').classList.remove('active');
+        }
+
+        function backToTowns() {
+            document.getElementById('alumniSection').classList.remove('active');
+            document.getElementById('massachusettsTowns').classList.add('active');
+        }
+
+        function showAlumni(town) {
+            const alumni = alumniData[town] || [];
+            const titleElement = document.getElementById('alumniSectionTitle');
+            const gridElement = document.getElementById('alumniGrid');
+            
+            titleElement.textContent = `${town.charAt(0).toUpperCase() + town.slice(1)} Alumni Trainers`;
+            
+            gridElement.innerHTML = '';
+            
+            if (alumni.length === 0) {
+                gridElement.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; background: white; border-radius: 16px; border-left: 5px solid #1a365d;">
+                        <h3 style="color: #1a365d; margin-bottom: 1rem; font-size: 1.5rem;">Coming Soon!</h3>
+                        <p style="color: #666; margin-bottom: 2rem;">We're working on partnerships in ${town.charAt(0).toUpperCase() + town.slice(1)}. Alumni trainers will be available once the school partnership is established.</p>
+                        <button class="book-button" onclick="showNotification('Partnership Request', 'Thank you for your interest! We\\'ll notify you as soon as ${town.charAt(0).toUpperCase() + town.slice(1)} partnerships are available.')" style="margin-top: 1rem; max-width: 300px;">Request Notification</button>
+                    </div>
+                `;
+            } else {
+                alumni.forEach(trainer => {
+                    const card = document.createElement('div');
+                    card.className = 'alumni-card';
+                    card.onclick = () => showProfile(trainer);
+                    card.innerHTML = `
+                        <div class="alumni-photo">${trainer.initials}</div>
+                        <div class="alumni-name">${trainer.name}</div>
+                        <div class="alumni-sport">${trainer.sport} • Class of 2020</div>
+                        <div class="alumni-rating">
+                            <div class="star-rating">★★★★★</div>
+                            <div class="rating-text">(${trainer.rating}/5 • ${trainer.reviews} reviews)</div>
+                        </div>
+                        <div class="alumni-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">${trainer.sessions}</div>
+                                <div class="stat-label">Sessions</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">${trainer.experience}</div>
+                                <div class="stat-label">Experience</div>
+                            </div>
+                        </div>
+                        <button class="book-button" onclick="event.stopPropagation(); showProfile(${JSON.stringify(trainer).replace(/"/g, '&quot;')})">Book Session - $75</button>
+                    `;
+                    gridElement.appendChild(card);
+                });
+            }
+            
+            document.getElementById('massachusettsTowns').classList.remove('active');
+            document.getElementById('alumniSection').classList.add('active');
+        }
+
+        function showProfile(trainer) {
+            document.getElementById('profilePhotoLarge').textContent = trainer.initials;
+            document.getElementById('profileName').textContent = trainer.name;
+            document.getElementById('profileSport').textContent = `${trainer.sport} • Class of 2020`;
+            document.getElementById('profileRating').textContent = `(${trainer.rating}/5 • ${trainer.reviews} reviews)`;
+            document.getElementById('profileBio').textContent = trainer.bio;
+            
+            // Initialize calendar
+            currentDate = new Date();
+            generateCalendar();
+            
+            // Reset booking state
+            selectedDate = null;
+            selectedTime = null;
+            selectedPaymentMethod = null;
+            document.getElementById('timeSlots').style.display = 'none';
+            document.getElementById('bookingSummary').style.display = 'none';
+            document.getElementById('integrationStatus').style.display = 'none';
+            document.getElementById('paymentSection').style.display = 'none';
+            
+            document.getElementById('profilePanel').classList.add('active');
+        }
+
+        // Booking system functions
+        function generateCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+            
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+            
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+            
+            for (let i = 0; i < 42; i++) {
+                const date = new Date(startDate);
+                date.setDate(startDate.getDate() + i);
+                
+                const dateStr = date.toISOString().split('T')[0];
+                const dayElement = document.createElement('div');
+                dayElement.style.cssText = `
+                    padding: 0.75rem 0.5rem;
+                    text-align: center;
+                    cursor: pointer;
+                    border-radius: 6px;
+                    transition: all 0.2s ease;
+                    border: 2px solid transparent;
+                    min-height: 45px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                `;
+                
+                const availableSlots = getAvailableSlots(dateStr);
+                const isCurrentMonth = date.getMonth() === month;
+                const isPastDate = date < new Date().setHours(0,0,0,0);
+                
+                if (!isCurrentMonth) {
+                    dayElement.style.color = '#cbd5e0';
+                    dayElement.style.background = '#f7fafc';
+                } else if (isPastDate) {
+                    dayElement.style.color = '#a0aec0';
+                    dayElement.style.background = '#f7fafc';
+                } else if (availableSlots.length > 0) {
+                    dayElement.style.background = '#dcfce7';
+                    dayElement.style.color = '#166534';
+                    dayElement.style.cursor = 'pointer';
+                    dayElement.onclick = () => selectDate(dateStr, availableSlots);
+                    
+                    const indicator = document.createElement('div');
+                    indicator.style.cssText = `
+                        position: absolute;
+                        bottom: 2px;
+                        right: 2px;
+                        width: 6px;
+                        height: 6px;
+                        background: #10b981;
+                        border-radius: 50%;
+                    `;
+                    dayElement.appendChild(indicator);
+                } else {
+                    dayElement.style.background = '#fed7d7';
+                    dayElement.style.color = '#c53030';
+                }
+                
+                dayElement.innerHTML = `<span>${date.getDate()}</span>`;
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+        
+        function getAvailableSlots(dateStr) {
+            const fieldSlots = integrationData.fieldPermits.available[dateStr] || [];
+            const trainerSlots = integrationData.trainerSchedule.available[dateStr] || [];
+            
+            const availableSlots = fieldSlots.filter(slot => 
+                trainerSlots.includes(slot) && 
+                !integrationData.schoolSchedule.blocked.includes(`${dateStr}T${slot}`)
+            );
+            
+            return availableSlots;
+        }
+        
+        function selectDate(dateStr, availableSlots) {
+            selectedDate = dateStr;
+            selectedTime = null;
+            
+            document.querySelectorAll('#calendarGrid > div').forEach(day => {
+                day.style.border = '2px solid transparent';
+            });
+            
+            const clickedElement = event.target.closest('div');
+            if (clickedElement) {
+                clickedElement.style.border = '2px solid #1a365d';
+            }
+            
+            document.getElementById('integrationStatus').style.display = 'block';
+            simulateIntegrationCheck();
+            
+            showTimeSlots(availableSlots);
+            
+            document.getElementById('selectedDate').textContent = new Date(dateStr).toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+        
+        function showTimeSlots(slots) {
+            const timeSlotsDiv = document.getElementById('timeSlots');
+            const timeSlotsGrid = document.getElementById('timeSlotsGrid');
+            
+            timeSlotsDiv.style.display = 'block';
+            timeSlotsGrid.innerHTML = '';
+            
+            slots.forEach(time => {
+                const slotElement = document.createElement('div');
+                slotElement.style.cssText = `
+                    padding: 0.75rem;
+                    background: #dcfce7;
+                    border: 2px solid #10b981;
+                    border-radius: 6px;
+                    text-align: center;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    font-weight: 600;
+                    color: #166534;
+                `;
+                
+                const timeObj = new Date(`2000-01-01 ${time}:00`);
+                const displayTime = timeObj.toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                });
+                
+                slotElement.textContent = displayTime;
+                slotElement.onclick = () => selectTime(time, displayTime, slotElement);
+                
+                timeSlotsGrid.appendChild(slotElement);
+            });
+        }
+        
+        function selectTime(time, displayTime, element) {
+            selectedTime = time;
+            
+            document.querySelectorAll('#timeSlotsGrid > div').forEach(slot => {
+                slot.style.background = '#dcfce7';
+                slot.style.color = '#166534';
+            });
+            
+            element.style.background = '#1a365d';
+            element.style.color = 'white';
+            
+            document.getElementById('selectedTime').textContent = displayTime;
+            document.getElementById('bookingSummary').style.display = 'block';
+        }
+        
+        function simulateIntegrationCheck() {
+            const statuses = ['schoolStatus', 'fieldStatus', 'trainerStatus'];
+            
+            statuses.forEach((statusId, index) => {
+                const element = document.getElementById(statusId);
+                element.style.background = '#f59e0b';
+                
+                setTimeout(() => {
+                    element.style.background = '#10b981';
+                }, (index + 1) * 500);
+            });
+        }
+        
+        function changeMonth(direction) {
+            currentDate.setMonth(currentDate.getMonth() + direction);
+            generateCalendar();
+            
+            document.getElementById('timeSlots').style.display = 'none';
+            document.getElementById('bookingSummary').style.display = 'none';
+            document.getElementById('integrationStatus').style.display = 'none';
+            selectedDate = null;
+            selectedTime = null;
+        }
+        
+        function proceedToPayment() {
+            if (!selectedDate || !selectedTime) {
+                alert('Please select a date and time first.');
+                return;
+            }
+            
+            document.getElementById('paymentSection').style.display = 'block';
+            document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            document.querySelectorAll('.payment-method').forEach(pm => {
+                pm.style.borderColor = '#e2e8f0';
+                pm.style.background = 'white';
+            });
+            
+            const clickedElement = event.target.closest('div');
+            if (clickedElement) {
+                clickedElement.style.borderColor = '#1a365d';
+                clickedElement.style.background = '#f0f8ff';
+            }
+            
+            const paymentForm = document.getElementById('paymentForm');
+            if (method === 'card') {
+                paymentForm.style.display = 'block';
+            } else {
+                paymentForm.style.display = 'none';
+            }
+        }
+        
+        function completeBooking() {
+            if (!selectedDate || !selectedTime || !selectedPaymentMethod) {
+                alert('Please complete all booking steps.');
+                return;
+            }
+            
+            showNotification('Booking Confirmed!', `
+                <strong>Your training session has been successfully booked!</strong><br><br>
+                
+                <strong>Session Details:</strong><br>
+                • Trainer: ${document.getElementById('profileName').textContent}<br>
+                • Date: ${document.getElementById('selectedDate').textContent}<br>
+                • Time: ${document.getElementById('selectedTime').textContent}<br>
+                • Location: Belmont High School Athletic Fields<br>
+                • Duration: 60 minutes<br><br>
+                
+                <strong>Integration Confirmed:</strong><br>
+                • School schedule verified ✓<br>
+                • Field permits secured ✓<br>
+                • Trainer availability locked ✓<br><br>
+                
+                <strong>Next Steps:</strong><br>
+                • Confirmation email sent<br>
+                • Session codes will arrive 1 hour before<br>
+                • Download Alumni Performance mobile app<br><br>
+                
+                <strong>Questions? Contact: support@alumniperformance.com</strong>
+            `);
+            
+            document.getElementById('profilePanel').classList.remove('active');
+        }
+
+        // Modal functions
+        function showAboutPage() {
+            document.getElementById('aboutPanel').classList.add('active');
+        }
+
+        function showContactPage() {
+            document.getElementById('contactPanel').classList.add('active');
+        }
+
+        function showAIPage() {
+            document.getElementById('aiPanel').classList.add('active');
+        }
+
+        function closeAbout() {
+            document.getElementById('aboutPanel').classList.remove('active');
+        }
+
+        function closeContact() {
+            document.getElementById('contactPanel').classList.remove('active');
+        }
+
+        function closeAI() {
+            document.getElementById('aiPanel').classList.remove('active');
+        }
+
+        // Admin functions
+        function openAdminDashboard() {
+            document.getElementById('adminPanel').classList.add('active');
+        }
+
+        function closeAdmin() {
+            document.getElementById('adminPanel').classList.remove('active');
+        }
+
+        function showAdminDemo(section) {
+            const messages = {
+                schools: 'SCHOOL MANAGEMENT\n\nManaging 1,247 partner schools:\n\n• Active Partnerships: 89 schools\n• Pending Approval: 158 schools\n• Under Review: 45 schools\n• New Applications: 23 this week\n\nBulk operations available for approvals, onboarding, and data export.',
+                fields: 'FIELD INTEGRATION\n\nMonitoring 15,000+ connected fields:\n\n• Municipal Systems: 1,200+ connected\n• Real-time Syncs: Every 15 seconds\n• Success Rate: 98.9%\n• Conflict Resolution: Automated\n\nAI-powered scheduling prevents booking conflicts.',
+                analytics: 'PLATFORM ANALYTICS\n\nKey Performance Metrics:\n\n• Monthly Active Users: 45,000+\n• Sessions Booked: 8,900/month\n• Revenue Growth: +340% YoY\n• School Retention: 97.8%\n\nPredictive modeling shows 15,000 schools by 2026.'
+            };
+            
+            alert(messages[section] || 'Admin feature demo');
+        }
+
+        // Demo functions
+        function showTrainerSearch() {
+            showNotification('Trainer Search', 'Smart Trainer Finder<br><br>Our AI-powered search helps you find the perfect trainer based on:<br><br>• Sport and position<br>• Experience level<br>• Location and availability<br>• Training style preference<br>• Budget and schedule<br><br>Advanced filters available for premium users!');
+        }
+
+        function showBookingPage() {
+            showNotification('Booking System', 'Smart Scheduling Platform<br><br>Features include:<br><br>• Real-time availability calendar<br>• Automatic field permit sync<br>• Instant booking confirmation<br>• Multiple payment options<br>• Recurring session setup<br>• Conflict prevention AI<br><br>Book with confidence!');
+        }
+
+        function showBookingDemo() {
+            showNotification('3-Way Integration Booking', 'Experience our comprehensive booking system:<br><br><strong>Real-time Integration:</strong><br>• School schedule verification ✓<br>• Field permit confirmation ✓<br>• Trainer availability sync ✓<br><br><strong>Smart Features:</strong><br>• Conflict prevention<br>• Automatic confirmations<br>• Mobile app codes<br>• Payment processing<br><br>Complete booking in under 2 minutes!');
+        }
+
+        function toggleAIChat() {
+            showNotification('AI Assistant', 'Alumni Performance AI<br><br>Hello! I can help you with:<br><br>• Finding the perfect trainer for your sport<br>• Checking real-time availability<br>• Understanding trainer backgrounds<br>• Booking and managing sessions<br>• Training tips and advice<br>• Platform navigation<br><br>What would you like to know?');
+        }
+
+        // Notification system
+        function showNotification(title, content) {
+            const existing = document.getElementById('notification');
+            if (existing) {
+                existing.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.id = 'notification';
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <div class="notification-header">
+                    <div class="notification-title">${title}</div>
+                    <button class="notification-close" onclick="closeNotification()">×</button>
+                </div>
+                <div class="notification-content" style="color: #4a5568; line-height: 1.5;">${content}</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                closeNotification();
+            }, 8000);
+        }
+
+        function closeNotification() {
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('click', function(event) {
+            const panels = ['aboutPanel', 'contactPanel', 'aiPanel', 'adminPanel', 'profilePanel'];
+            
+            panels.forEach(panelId => {
+                const panel = document.getElementById(panelId);
+                const content = panel.querySelector('.about-content, .contact-content, .ai-content, .admin-content, .profile-content');
+                
+                if (panel.classList.contains('active') && 
+                    content && !content.contains(event.target) && 
+                    !event.target.closest('.dropdown-item')) {
+                    panel.classList.remove('active');
+                }
+            });
+        });
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.15)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize welcome message
+        setTimeout(() => {
+            showNotification('Welcome to Alumni Performance!', 'Discover elite alumni trainers in your area and take your athletic performance to the next level. Click on <strong>Massachusetts</strong> in the Locations menu to explore our active partnerships!');
+        }, 1000);
+    </script>
+</body>
+</html>
